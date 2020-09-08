@@ -1,0 +1,103 @@
+buildscript {
+    ext {
+        mavenUserName = '5f03d6a0cc3021d7e3b10d1e'
+        mavenPassword = 'rhwCs0kO7Rdz'
+        lombokVersion = '+'
+        junitVersion = '4.13'
+        swaggerVersion = '1.5.20'
+        validationVersion = '2.0.1.Final'
+    }
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'java'
+
+group = 'com.touchbiz'
+version = '1.0.0.RELEASE'
+def artifactId = 'common-entity'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        credentials {
+            username "$mavenUserName"
+            password "$mavenPassword"
+        }
+        url ''
+    }
+
+    maven {
+        credentials {
+            username "$mavenUserName"
+            password "$mavenPassword"
+        }
+        url ''
+    }
+    maven { url 'https://repo.spring.io/snapshot' }
+    maven { url 'https://repo.spring.io/milestone' }
+}
+
+
+dependencies {
+    compileOnly group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
+    annotationProcessor group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
+    compile group: "io.swagger", name: "swagger-annotations", version: "${swaggerVersion}"
+    compile group: "javax.validation", name: "validation-api", version: "${validationVersion}"
+    testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
+
+}
+
+//打包源代码
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+//如果希望gradle install，安装到.m2本地仓库，参考下面的内容
+install {
+    repositories.mavenInstaller {
+        pom.version = "$project.version"
+        pom.artifactId = "$artifactId"
+        pom.groupId = "$project.group"
+    }
+}
+
+uploadArchives {
+    configuration = configurations['archives']
+    repositories {
+        mavenDeployer {
+            // 注释1
+            pom.groupId = "$project.group"
+            pom.version = "$project.version"
+            pom.artifactId = "$artifactId"
+            // 注释2
+            pom.project {
+                name project.name
+                packaging 'jar'
+                description '公共类库'
+            }
+            // 注释3
+            repository(url: "https://packages.aliyun.com/maven/repository/2013243-release-ny6ga4/") {
+                authentication(userName: "$mavenUserName", password: "$mavenPassword")
+            }
+        }
+    }
+}
+

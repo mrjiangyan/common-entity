@@ -1,0 +1,36 @@
+package com.touchbiz.common.entity.exception;
+
+/**
+ * @Author: Steven Jiang(mrjiangyan@hotmail.com)
+ * @Date: 2018/11/2 下午2:39
+ */
+
+import com.touchbiz.common.entity.result.IResultMsg;
+import io.swagger.annotations.ApiModel;
+import lombok.ToString;
+
+/**
+ * 运行时参数异常
+ */
+@ToString
+@ApiModel("参数错误的异常模型")
+public class ParamException extends AbstractException {
+
+    private static final long serialVersionUID = -4122738912199159492L;
+
+    public ParamException(IResultMsg error) {
+        super(error);
+    }
+
+    public ParamException(String error) {
+        super(error);
+    }
+
+    public ParamException(IResultMsg error, Throwable cause) {
+        super(error, cause);
+    }
+
+    public ParamException(Throwable cause){
+        super(IResultMsg.APIEnum.PARAM_ERROR,cause);
+    }
+}
