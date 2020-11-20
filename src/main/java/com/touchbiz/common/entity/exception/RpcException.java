@@ -1,7 +1,7 @@
 package com.touchbiz.common.entity.exception;
 
 /**
- * @Author: Steven Jiang(mrjiangyan@hotmail.com)
+ * @Author: Steven Jiang(jiangyan@toplist.com)
  * @Date: 2018/11/14 下午2:42
  */
 
@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModel;
 /**
  * 远程调用异常
  *
- * @Author: Steven Jiang(mrjiangyan@hotmail.com)
+ * @Author: Steven Jiang(jiangyan@toplist.com)
  * @Date: 2018/11/6 下午5:29
  */
 @ApiModel("RPC接口调用异常错误模型")

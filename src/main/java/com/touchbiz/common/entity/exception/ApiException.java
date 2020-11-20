@@ -10,7 +10,7 @@ import lombok.ToString;
  */
 @ToString
 @ApiModel("API接口的异常模型")
-public class ApiException extends AbstractException  {
+public class ApiException extends AbstractException {
 
     public ApiException(IResultMsg error) {
         super(error);

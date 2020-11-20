@@ -17,8 +17,10 @@ public abstract class AbstractException extends RuntimeException {
         this.setMsg(error);
     }
 
+    @Deprecated
     public AbstractException(String error) {
         super(error);
+        setMsg(IResultMsg.APIEnum.FAILED);
     }
 
 

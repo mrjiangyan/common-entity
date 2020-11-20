@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 /**
- * @Author: Steven Jiang(mrjiangyan@hotmail.com.cn)
+ * @Author: Steven Jiang(jiangyan@toplist.com.cn)
  * @Date: 2018/9/28 12：00
  */
 @Data
@@ -106,7 +106,8 @@ public class ApiResult<T> implements Serializable {
      * @return API响应对象
      */
     public static <T> ApiResult<T> getSuccessResponse(T data) {
-       return ApiResult.getCustomResponse(IResultMsg.APIEnum.SUCCESS,data);
+        assert !(data instanceof IResultMsg);
+        return ApiResult.getCustomResponse(IResultMsg.APIEnum.SUCCESS,data);
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.touchbiz.common.entity.exception;
 
 /**
- * @Author: Steven Jiang(mrjiangyan@hotmail.com)
+ * @Author: Steven Jiang(jiangyan@toplist.com)
  * @Date: 2018/11/2 下午2:46
  */
 

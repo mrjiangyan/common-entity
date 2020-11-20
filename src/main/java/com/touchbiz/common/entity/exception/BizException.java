@@ -1,7 +1,7 @@
 package com.touchbiz.common.entity.exception;
 
 /**
- * @Author: Steven Jiang(mrjiangyan@hotmail.com)
+ * @Author: Steven Jiang(jiangyan@toplist.com)
  * @Date: 2018/11/2 下午2:46
  */
 
@@ -23,7 +23,18 @@ public class BizException extends AbstractException  {
     }
 
     public BizException(String error) {
-        super(error);
+        super(new IResultMsg(){
+
+            @Override
+            public Long getCode() {
+                return APIEnum.BIZ_ERRPR.getCode();
+            }
+
+            @Override
+            public String getMessage() {
+                return error;
+            }
+        });
     }
 
     public BizException(IResultMsg error, Throwable cause) {

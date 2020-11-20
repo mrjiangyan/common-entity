@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        mavenUserName = '5f570529fa82bfeb805b00fd'
-        mavenPassword = 'w8D1wcrzJ8Ie'
+        mavenUserName = '5f573af3e1cf498f370573c8'
+        mavenPassword = 'WDwiza3S(oFV'
         lombokVersion = '+'
         junitVersion = '4.13'
         swaggerVersion = '1.5.20'
@@ -34,16 +34,9 @@ repositories {
             username "$mavenUserName"
             password "$mavenPassword"
         }
-        url 'https://packages.aliyun.com/maven/repository/2031196-release-NRdrSf/'
+        url 'https://packages.aliyun.com/maven/repository/2031284-release-KDf3XN/'
     }
 
-    maven {
-        credentials {
-            username "$mavenUserName"
-            password "$mavenPassword"
-        }
-        url 'https://packages.aliyun.com/maven/repository/2031196-snapshot-6NE11W/'
-    }
     maven { url 'https://repo.spring.io/snapshot' }
     maven { url 'https://repo.spring.io/milestone' }
 }
@@ -94,7 +87,7 @@ uploadArchives {
                 description '公共类库'
             }
             // 注释3
-            repository(url: "https://packages.aliyun.com/maven/repository/2031196-release-NRdrSf/") {
+            repository(url: "https://packages.aliyun.com/maven/repository/2031284-release-KDf3XN/") {
                 authentication(userName: "$mavenUserName", password: "$mavenPassword")
             }
         }
