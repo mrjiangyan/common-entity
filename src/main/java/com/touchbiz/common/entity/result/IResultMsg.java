@@ -9,12 +9,19 @@ import java.io.Serializable;
  *
  * @author laisongxian
  * @version 1.0
- * @created 15/12/8 13:05
+ * @date 15/12/8 13:05
  **/
 public interface IResultMsg extends Serializable {
 
+    /**
+     * @return 获取错误代码
+     */
     Long getCode();
 
+    /**
+     * 获取错误消息
+     * @return
+     */
     String getMessage();
 
     /**
@@ -37,9 +44,9 @@ public interface IResultMsg extends Serializable {
         BIZ_ERRPR(-10200L, "业务异常");
 
         @Getter
-        private Long code;
+        private final Long code;
         @Getter
-        private String message;
+        private final String message;
 
         APIEnum(Long code, String message) {
             this.code = code;

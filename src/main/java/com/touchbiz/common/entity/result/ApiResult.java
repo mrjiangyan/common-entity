@@ -10,8 +10,8 @@ import java.util.Map;
 
 
 /**
- * @Author: Steven Jiang(jiangyan@toplist.com.cn)
- * @Date: 2018/9/28 12：00
+ * @author: Steven Jiang(jiangyan@toplist.com.cn)
+ * @date: 2018/9/28 12：00
  */
 @Data
 @ApiModel("返回结果的标准对象模型")
@@ -34,7 +34,6 @@ public class ApiResult<T> implements Serializable {
 
     /**
      * 检查返回状态是否为成功状态
-     * @return
      */
     public boolean isSuccess(){
         return status >= 0;
@@ -147,8 +146,9 @@ public class ApiResult<T> implements Serializable {
         }else {
             apiResult.setStatus(IResultMsg.APIEnum.FAILED.getCode());
             apiResult.setMessage(e.getMessage());
-            apiResult.setErrorInfo(ExceptionUtils.getExceMainInfo(e));
         }
+        apiResult.setErrorInfo(ExceptionUtils.getExceMainInfo(e));
+        apiResult.setErrorMessage(e.getMessage());
         return apiResult;
     }
 

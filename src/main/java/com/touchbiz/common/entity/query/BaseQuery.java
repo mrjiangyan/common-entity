@@ -3,13 +3,13 @@ package com.touchbiz.common.entity.query;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author steven
@@ -50,8 +50,34 @@ public class BaseQuery implements Serializable {
 
     private Boolean export;
 
+    @ApiModelProperty("正序还是倒序")
+    private SortTypeEnum sortType;
+
+    @ApiModelProperty("排序字段")
+    private String sortField;
+
+    @ApiModelProperty("渠道ID")
+    private Integer channelId;
+
+    @ApiModelProperty("上下架状态，0是下架1是上架")
+    private Integer status;
+
     public Integer getOffset() {
         return (this.getPageIndex() - 1) * this.getPageSize();
     }
 
+    public enum SortTypeEnum{
+        /**
+         * 正序，由小到大
+         */
+        ASC,
+        /**
+         * 倒序，由大到小
+         */
+        DESC,
+        /**
+         * 未指定
+         */
+        NONE
+    }
 }

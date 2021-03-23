@@ -1,18 +1,13 @@
 package com.touchbiz.common.entity.exception;
 
-/**
- * @Author: Steven Jiang(jiangyan@toplist.com)
- * @Date: 2018/11/2 下午2:39
- */
-
 import com.touchbiz.common.entity.result.IResultMsg;
 import io.swagger.annotations.ApiModel;
 import lombok.ToString;
 
 /**
  * 运行时参数异常
+ * @author steven
  */
-@ToString
 @ApiModel("参数错误的异常模型")
 public class ParamException extends AbstractException {
 

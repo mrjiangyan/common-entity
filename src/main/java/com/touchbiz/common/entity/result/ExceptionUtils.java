@@ -9,7 +9,7 @@ import java.util.Map;
  * @author wenzhiqiang
  * @date 2017年3月28日
  */
-final class ExceptionUtils {
+public class ExceptionUtils {
     private ExceptionUtils() {
     }
 
@@ -20,23 +20,23 @@ final class ExceptionUtils {
             Map<String, Map<String, Object>> exceptionInfoMap = new HashMap<>();
             Throwable t = e.getCause() != null ? e.getCause() : e;
             Map<String, Object> rootInfoMap = new HashMap<>();
-            rootInfoMap.put("原因", t.getMessage());
-            rootInfoMap.put("类型", t.getClass().getName());
-            if( e.getStackTrace().length>0) {
-                rootInfoMap.put("行号", t.getStackTrace()[0].getLineNumber());
-                rootInfoMap.put("方法名", t.getStackTrace()[0].getMethodName());
-                rootInfoMap.put("类名", t.getStackTrace()[0].getClassName());
+            rootInfoMap.put("reason", t.getMessage());
+            rootInfoMap.put("type", t.getClass().getName());
+            if(e.getStackTrace().length>0) {
+                rootInfoMap.put("line", t.getStackTrace()[0].getLineNumber());
+                rootInfoMap.put("method", t.getStackTrace()[0].getMethodName());
+                rootInfoMap.put("class", t.getStackTrace()[0].getClassName());
             }
-            exceptionInfoMap.put("异常信息", rootInfoMap);
+            exceptionInfoMap.put("errorInfo", rootInfoMap);
             int len = e.getStackTrace().length;
             int loop = 0;
             while (loop < len) {
-                if (e.getStackTrace()[loop].getClassName().startsWith("com.byh")) {
+                if (e.getStackTrace()[loop].getClassName().startsWith("com.toplist")) {
                     Map<String, Object> localCallInfoMap = new HashMap<>();
-                    localCallInfoMap.put("行号", e.getStackTrace()[loop].getLineNumber());
-                    localCallInfoMap.put("方法名", e.getStackTrace()[loop].getMethodName());
-                    localCallInfoMap.put("类名", e.getStackTrace()[loop].getClassName());
-                    exceptionInfoMap.put("调用信息", localCallInfoMap);
+                    localCallInfoMap.put("line", e.getStackTrace()[loop].getLineNumber());
+                    localCallInfoMap.put("method", e.getStackTrace()[loop].getMethodName());
+                    localCallInfoMap.put("class", e.getStackTrace()[loop].getClassName());
+                    exceptionInfoMap.put("callInfo", localCallInfoMap);
                     break;
                 }
                 loop++;
@@ -44,4 +44,6 @@ final class ExceptionUtils {
             return exceptionInfoMap;
         }
     }
+
+
 }

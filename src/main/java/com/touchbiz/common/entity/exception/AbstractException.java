@@ -2,31 +2,23 @@ package com.touchbiz.common.entity.exception;
 
 import com.touchbiz.common.entity.result.IResultMsg;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
 public abstract class AbstractException extends RuntimeException {
 
+    @Getter
     @ApiModelProperty(name = "错误消息对象",reference = "IResultMsg",required = true)
-    private IResultMsg msg;
+    private final IResultMsg msg;
 
     public AbstractException(IResultMsg error) {
         super(error.getMessage());
-        this.setMsg(error);
+        msg = error;
     }
-
-    @Deprecated
-    public AbstractException(String error) {
-        super(error);
-        setMsg(IResultMsg.APIEnum.FAILED);
-    }
-
 
     public AbstractException(IResultMsg error, Throwable cause) {
         super(error.getMessage(), cause);
-        this.setMsg(error);
+        msg = error;
     }
 
     /** Constructs a new runtime exception with the specified cause and a
@@ -43,6 +35,6 @@ public abstract class AbstractException extends RuntimeException {
      */
     public AbstractException(Throwable cause) {
         super(cause);
-        this.setMsg(IResultMsg.APIEnum.SERVER_ERROR);
+        msg = IResultMsg.APIEnum.FAILED;
     }
 }

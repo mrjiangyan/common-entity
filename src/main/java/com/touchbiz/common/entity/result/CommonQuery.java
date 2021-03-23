@@ -3,6 +3,9 @@ package com.touchbiz.common.entity.result;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * @author steven
+ */
 @Data
 public class CommonQuery {
 
