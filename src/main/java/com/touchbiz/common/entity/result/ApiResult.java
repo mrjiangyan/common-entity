@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 /**
- * @author: Steven Jiang(jiangyan@toplist.com.cn)
+ * @author: Steven Jiang(mrjiangyan@hotmail.com)
  * @date: 2018/9/28 12：00
  */
 @Data

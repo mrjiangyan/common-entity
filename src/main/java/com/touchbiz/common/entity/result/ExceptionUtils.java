@@ -31,7 +31,7 @@ public class ExceptionUtils {
             int len = e.getStackTrace().length;
             int loop = 0;
             while (loop < len) {
-                if (e.getStackTrace()[loop].getClassName().startsWith("com.toplist")) {
+                if (e.getStackTrace()[loop].getClassName().startsWith("com.touchbiz")) {
                     Map<String, Object> localCallInfoMap = new HashMap<>();
                     localCallInfoMap.put("line", e.getStackTrace()[loop].getLineNumber());
                     localCallInfoMap.put("method", e.getStackTrace()[loop].getMethodName());

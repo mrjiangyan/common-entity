@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModel;
 /**
  * 远程调用异常
  *
- * @author: Steven Jiang(jiangyan@toplist.com)
+ * @author: Steven Jiang(mrjiangyan@hotmail.com)
  * @date: 2018/11/6 下午5:29
  */
 @ApiModel("RPC接口调用异常错误模型")
