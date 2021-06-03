@@ -10,17 +10,17 @@ import java.util.Map;
 
 
 /**
- * @author: Steven Jiang(mrjiangyan@hotmail.com)
+ * @author: Steven Jiang(jiangyan@toplist.com.cn)
  * @date: 2018/9/28 12：00
  */
 @Data
 @ApiModel("返回结果的标准对象模型")
 public class ApiResult<T> implements Serializable {
 
-    @ApiModelProperty(value = "返回状态",reference = "IResultMsg",required = true)
+    @ApiModelProperty(value = "返回状态", reference = "IResultMsg", required = true)
     private Long status;
 
-    @ApiModelProperty(value = "返回状态对应的消息",required = true)
+    @ApiModelProperty(value = "返回状态对应的消息", required = true)
     private String message;
 
     @ApiModelProperty(value = "返回结果中的数据体")
@@ -35,17 +35,18 @@ public class ApiResult<T> implements Serializable {
     /**
      * 检查返回状态是否为成功状态
      */
-    public boolean isSuccess(){
+    public boolean isSuccess() {
         return status >= 0;
     }
 
     /**
      * 静态方法检查返回结果是否为成功状态
+     *
      * @param result
      * @return
      */
-    public static boolean isSuccess(ApiResult result){
-        if(result== null){
+    public static boolean isSuccess(ApiResult result) {
+        if (result == null) {
             return false;
         }
         return result.isSuccess();
@@ -106,14 +107,14 @@ public class ApiResult<T> implements Serializable {
      */
     public static <T> ApiResult<T> getSuccessResponse(T data) {
         assert !(data instanceof IResultMsg);
-        return ApiResult.getCustomResponse(IResultMsg.APIEnum.SUCCESS,data);
+        return ApiResult.getCustomResponse(IResultMsg.APIEnum.SUCCESS, data);
     }
 
     /**
      * 返回自定义的任意数据
      *
-     * @param status  状态
-     * @param data    数据
+     * @param status 状态
+     * @param data   数据
      * @return API响应对象
      */
     public static <T> ApiResult<T> getCustomResponse(IResultMsg status, T data) {
@@ -139,11 +140,11 @@ public class ApiResult<T> implements Serializable {
 
     public static <T> ApiResult<T> getErrorResponse(Throwable e) {
         ApiResult<T> apiResult = new ApiResult<>();
-        if (e instanceof AbstractException && ((AbstractException)e).getMsg() != null) {
+        if (e instanceof AbstractException && ((AbstractException) e).getMsg() != null) {
             AbstractException exception = (AbstractException) e;
             apiResult.setStatus(exception.getMsg().getCode());
             apiResult.setMessage(e.getMessage());
-        }else {
+        } else {
             apiResult.setStatus(IResultMsg.APIEnum.FAILED.getCode());
             apiResult.setMessage(e.getMessage());
         }
@@ -154,12 +155,13 @@ public class ApiResult<T> implements Serializable {
 
     /**
      * 在失败的情况下拷贝错误消息等
+     *
      * @param result
      * @param <T>
      * @return
      */
     public static <T> ApiResult<T> convertApiResult(ApiResult result) {
-        if(result == null){
+        if (result == null) {
             return ApiResult.getCustomResponse(IResultMsg.APIEnum.FAILED);
         }
         ApiResult<T> apiResult = new ApiResult<>();
@@ -169,8 +171,6 @@ public class ApiResult<T> implements Serializable {
         apiResult.setMessage(result.message);
         return apiResult;
     }
-
-
 
 
 }

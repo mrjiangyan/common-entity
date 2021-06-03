@@ -1,5 +1,6 @@
 package com.touchbiz.common.entity.query;
 
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -81,3 +82,4 @@ public class BaseQuery implements Serializable {
         NONE
     }
 }
+

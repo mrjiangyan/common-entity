@@ -40,4 +40,6 @@ public class BaseDomain {
      * 修改时间
      */
     private Timestamp gmtModify;
+
+    private Boolean status;
 }
