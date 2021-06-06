@@ -17,11 +17,6 @@ public class BaseDomain {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * 渠道商id
-     */
-    private Long channelId;
-
     private Boolean deleted;
 
     /**

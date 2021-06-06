@@ -15,12 +15,6 @@ public class BaseRequest {
     @ApiModelProperty("用户信息")
     private User user;
 
-    @ApiModelProperty("渠道id")
-    private Long channelId;
-
-    @ApiModelProperty("第三方公司Id")
-    private Long corpId;
-
     @Data
     @AllArgsConstructor
     public static class User{
