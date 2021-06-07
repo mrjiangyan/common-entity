@@ -58,7 +58,7 @@ public class BaseQuery implements Serializable {
     private String sortField;
 
     @ApiModelProperty("上下架状态，0是下架1是上架")
-    private Integer status;
+    private Boolean status;
 
     public Integer getOffset() {
         return (this.getPageIndex() - 1) * this.getPageSize();
