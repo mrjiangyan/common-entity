@@ -57,9 +57,6 @@ public class BaseQuery implements Serializable {
     @ApiModelProperty("排序字段")
     private String sortField;
 
-    @ApiModelProperty("渠道ID")
-    private Integer channelId;
-
     @ApiModelProperty("上下架状态，0是下架1是上架")
     private Integer status;
 
