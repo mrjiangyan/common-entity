@@ -4,6 +4,7 @@ package com.touchbiz.common.entity.query;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.Max;
@@ -43,9 +44,11 @@ public class BaseQuery implements Serializable {
     @ApiModelProperty("查询第几页数据")
     private Integer pageIndex;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     @ApiModelProperty("开始时间")
     private LocalDateTime startDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     @ApiModelProperty("结束时间")
     private LocalDateTime endDate;
 
