@@ -75,7 +75,6 @@ publishing {
         mavenJava(MavenPublication) {
             //指定group/artifact/version信息
             groupId "$project.group"
-//            artifactId "$artifactId"
             version "$project.version"
             description '公共类库'
             from components.java
@@ -86,7 +85,7 @@ publishing {
     }
     // 发布仓库
     repositories {
-//        mavenLocal()
+        mavenLocal()
 
         maven {
             // 凭证
