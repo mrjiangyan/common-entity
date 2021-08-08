@@ -8,14 +8,12 @@ buildscript {
         springfoxVersion = '3.0.0'
         validationVersion = '2.0.1.Final'
     }
-    repositories {
-        mavenCentral()
-    }
 }
 
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
-apply plugin: 'java'
+plugins {
+    id 'maven-publish'
+    id 'java'
+}
 
 group = 'com.touchbiz'
 version = '1.8.RELEASE'
@@ -40,6 +38,7 @@ repositories {
 
     maven { url 'https://repo.spring.io/snapshot' }
     maven { url 'https://repo.spring.io/milestone' }
+    mavenLocal()
 }
 
 
@@ -47,11 +46,15 @@ dependencies {
     compileOnly group: "javax.persistence", name: "persistence-api", version: "1.0"
     compileOnly group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
     annotationProcessor group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
-    compile group: "io.swagger", name: "swagger-annotations", version: "${swaggerVersion}"
+    implementation group: "io.swagger", name: "swagger-annotations", version: "${swaggerVersion}"
     compileOnly group: "io.springfox", name: "springfox-core", version: "${springfoxVersion}"
 
-    compile group: "javax.validation", name: "validation-api", version: "${validationVersion}"
+    implementation group: "javax.validation", name: "validation-api", version: "${validationVersion}"
     testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 //打包源代码
@@ -60,40 +63,41 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+
 artifacts {
     archives sourcesJar
 }
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-//如果希望gradle install，安装到.m2本地仓库，参考下面的内容
-install {
-    repositories.mavenInstaller {
-        pom.version = "$project.version"
-        pom.artifactId = "$artifactId"
-        pom.groupId = "$project.group"
-    }
-}
+publishing {
+     publications {
+        mavenJava(MavenPublication) {
+            //指定group/artifact/version信息
+            groupId "$project.group"
+//            artifactId "$artifactId"
+            version "$project.version"
+            description '公共类库'
+            from components.java
 
-uploadArchives {
-    configuration = configurations['archives']
+            // 增加 sourcesJar、javadocJar 任务
+            artifact sourcesJar
+        }
+    }
+    // 发布仓库
     repositories {
-        mavenDeployer {
-            // 注释1
-            pom.groupId = "$project.group"
-            pom.version = "$project.version"
-            pom.artifactId = "$artifactId"
-            // 注释2
-            pom.project {
-                name project.name
-                packaging 'jar'
-                description '公共类库'
+//        mavenLocal()
+
+        maven {
+            // 凭证
+            credentials {
+                username "$mavenUserName" // 仓库发布用户名
+                password "$mavenPassword" // 仓库发布用户密码
             }
-            // 注释3
-            repository(url: "https://packages.aliyun.com/maven/repository/2031284-release-KDf3XN/") {
-                authentication(userName: "$mavenUserName", password: "$mavenPassword")
-            }
+            // 地址
+            url 'https://packages.aliyun.com/maven/repository/2031284-release-KDf3XN/'
         }
     }
 }
+
 

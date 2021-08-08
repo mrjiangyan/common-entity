@@ -7,7 +7,7 @@ import lombok.ToString;
 /**
  * 业务异常，service层或者proxy层抛出的异常
  * @author steven
- * @Date: 2018/11/2 下午2:46
+ * Date: 2018/11/2 下午2:46
  */
 
 @ApiModel("业务的异常模型")
