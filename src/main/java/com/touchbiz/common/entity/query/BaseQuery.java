@@ -44,11 +44,11 @@ public class BaseQuery implements Serializable {
     @ApiModelProperty("查询第几页数据")
     private Integer pageIndex;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty("开始时间")
     private LocalDateTime startDate;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty("结束时间")
     private LocalDateTime endDate;
 

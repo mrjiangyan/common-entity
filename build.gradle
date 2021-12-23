@@ -1,12 +1,17 @@
 buildscript {
     ext {
-        mavenUserName = '5f573af3e1cf498f370573c8'
-        mavenPassword = 'WDwiza3S(oFV'
-        lombokVersion = '+'
-        junitVersion = '4.13'
+        springBootVersion = '2.3.3.RELEASE'
+        springVersion = '5.2.8.RELEASE'
         swaggerVersion = '1.5.20'
         springfoxVersion = '3.0.0'
         validationVersion = '2.0.1.Final'
+
+        mavenUserName = '61402da4c364e0737d2e4d14'
+        mavenPassword = 'Gl9SYH4Xz]OB'
+        lombokVersion = '+'
+        junitVersion = '4.13'
+        repositoryUrl = 'https://packages.aliyun.com/maven/repository/2137731-release-WXgfEj'
+
     }
     repositories {
         mavenCentral()
@@ -18,7 +23,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'java'
 
 group = 'com.touchbiz'
-version = '1.8.RELEASE'
+version = '1.9.RELEASE'
 def artifactId = 'common-entity'
 sourceCompatibility = '1.8'
 
@@ -29,29 +34,29 @@ configurations {
 }
 
 repositories {
+    maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url 'https://repo.spring.io/snapshot' }
+    maven { url 'https://repo.spring.io/milestone' }
     mavenCentral()
     maven {
         credentials {
             username "$mavenUserName"
             password "$mavenPassword"
         }
-        url 'https://packages.aliyun.com/maven/repository/2031284-release-KDf3XN/'
+        url 'https://packages.aliyun.com/maven/repository/2137731-release-WXgfEj'
     }
 
-    maven { url 'https://repo.spring.io/snapshot' }
-    maven { url 'https://repo.spring.io/milestone' }
 }
 
-
 dependencies {
-    compileOnly group: "javax.persistence", name: "persistence-api", version: "1.0"
+    compile group: "javax.persistence", name: "persistence-api", version: "1.0"
     compileOnly group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
     annotationProcessor group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
     compile group: "io.swagger", name: "swagger-annotations", version: "${swaggerVersion}"
-    compileOnly group: "io.springfox", name: "springfox-core", version: "${springfoxVersion}"
-
+    compile group: "io.springfox", name: "springfox-core", version: "${springfoxVersion}"
     compile group: "javax.validation", name: "validation-api", version: "${validationVersion}"
     testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
+
 }
 
 //打包源代码
@@ -63,8 +68,6 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 artifacts {
     archives sourcesJar
 }
-
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 //如果希望gradle install，安装到.m2本地仓库，参考下面的内容
 install {
@@ -89,11 +92,11 @@ uploadArchives {
                 packaging 'jar'
                 description '公共类库'
             }
-            // 注释3
-            repository(url: "https://packages.aliyun.com/maven/repository/2031284-release-KDf3XN/") {
+            repository(url: "$repositoryUrl") {
                 authentication(userName: "$mavenUserName", password: "$mavenPassword")
             }
         }
     }
 }
+
 
