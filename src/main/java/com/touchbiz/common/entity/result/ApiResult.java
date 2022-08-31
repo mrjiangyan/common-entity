@@ -42,8 +42,6 @@ public class ApiResult<T> implements Serializable {
     /**
      * 静态方法检查返回结果是否为成功状态
      *
-     * @param result
-     * @return
      */
     public static boolean isSuccess(ApiResult result) {
         if (result == null) {
