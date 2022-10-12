@@ -16,4 +16,6 @@ public class SysUserCacheInfo {
     private List<String> sysMultiOrgCode;
 
     private boolean oneDepart;
+
+    private Long tenanId;
 }
