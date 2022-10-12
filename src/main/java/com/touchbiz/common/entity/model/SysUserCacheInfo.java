@@ -17,5 +17,8 @@ public class SysUserCacheInfo {
 
     private boolean oneDepart;
 
+    /**
+     * 用户使用的租户ID
+     */
     private Long tenanId;
 }
