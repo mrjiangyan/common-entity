@@ -15,17 +15,20 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 }
 
-apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'java'
+apply plugin: 'java-library'
 
 group = 'com.touchbiz'
-version = '2022.8.31.1'
+version = '2022.10.13.2'
 def artifactId = 'common-entity'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -49,12 +52,12 @@ repositories {
 }
 
 dependencies {
-    compile group: "javax.persistence", name: "persistence-api", version: "1.0"
+    api group: "javax.persistence", name: "persistence-api", version: "1.0"
     compileOnly group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
     annotationProcessor group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
-    compile group: "io.swagger", name: "swagger-annotations", version: "${swaggerVersion}"
-    compile group: "io.springfox", name: "springfox-core", version: "${springfoxVersion}"
-    compile group: "javax.validation", name: "validation-api", version: "${validationVersion}"
+    api group: "io.swagger", name: "swagger-annotations", version: "${swaggerVersion}"
+    api group: "io.springfox", name: "springfox-core", version: "${springfoxVersion}"
+    api group: "javax.validation", name: "validation-api", version: "${validationVersion}"
     testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
 
 }
@@ -69,34 +72,27 @@ artifacts {
     archives sourcesJar
 }
 
-//如果希望gradle install，安装到.m2本地仓库，参考下面的内容
-install {
-    repositories.mavenInstaller {
-        pom.version = "$project.version"
-        pom.artifactId = "$artifactId"
-        pom.groupId = "$project.group"
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = "$project.group"
+            artifactId = "$artifactId"
+            version = "$project.version"
+            from components.java
+        }
     }
-}
-
-uploadArchives {
-    configuration = configurations['archives']
     repositories {
-        mavenDeployer {
-            // 注释1
-            pom.groupId = "$project.group"
-            pom.version = "$project.version"
-            pom.artifactId = "$artifactId"
-            // 注释2
-            pom.project {
-                name project.name
-                packaging 'jar'
-                description '公共类库'
+        maven {
+            //认证用户和密码
+            credentials{
+                username = "$mavenUserName"
+                password = "$mavenPassword"
             }
-            repository(url: "$repositoryUrl") {
-                authentication(userName: "$mavenUserName", password: "$mavenPassword")
-            }
+            //指定要上传的maven私服仓库
+            url "$repositoryUrl"
         }
     }
 }
+
 
 
