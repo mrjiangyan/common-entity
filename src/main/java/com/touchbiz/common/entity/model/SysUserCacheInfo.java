@@ -20,5 +20,5 @@ public class SysUserCacheInfo {
     /**
      * 用户使用的租户ID
      */
-    private Long tenanId;
+    private Long tenantId;
 }
