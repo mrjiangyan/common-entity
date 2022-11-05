@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Map;
 
 
@@ -18,7 +19,7 @@ import java.util.Map;
 public class ApiResult<T> implements Serializable {
 
     @ApiModelProperty(value = "返回状态", reference = "IResultMsg", required = true)
-    private Long status;
+    private Integer status;
 
     @ApiModelProperty(value = "返回状态对应的消息", required = true)
     private String message;
@@ -54,37 +55,37 @@ public class ApiResult<T> implements Serializable {
     }
 
     ApiResult(T data) {
-        this.status = IResultMsg.APIEnum.SUCCESS.getCode();
+        this.status = IResultMsg.APIEnum.SUCCESS.getCode().intValue();
         this.message = IResultMsg.APIEnum.SUCCESS.getMessage();
         this.data = data;
     }
 
     ApiResult(T data, Long status, String message) {
-        this.status = status;
+        this.status = status.intValue();
         this.message = message;
         this.data = data;
     }
 
     ApiResult(IResultMsg result) {
-        this.status = result.getCode();
+        this.status = result.getCode().intValue();
         this.message = result.getMessage();
         this.data = null;
     }
 
     ApiResult(IResultMsg result, String message) {
-        this.status = result.getCode();
+        this.status = result.getCode().intValue();
         this.message = message;
         this.data = null;
     }
 
     ApiResult(IResultMsg result, T data) {
-        this.status = result.getCode();
+        this.status = result.getCode().intValue();
         this.message = result.getMessage();
         this.data = data;
     }
 
     ApiResult(Long status, String message) {
-        this.status = status;
+        this.status = status.intValue();
         this.message = message;
         this.data = null;
     }
@@ -130,7 +131,7 @@ public class ApiResult<T> implements Serializable {
      */
     public static <T> ApiResult<T> getCustomResponse(IResultMsg status) {
         ApiResult<T> apiResult = new ApiResult<>();
-        apiResult.setStatus(status.getCode());
+        apiResult.setStatus(status.getCode().intValue());
         apiResult.setMessage(status.getMessage());
         return apiResult;
     }
@@ -140,10 +141,10 @@ public class ApiResult<T> implements Serializable {
         ApiResult<T> apiResult = new ApiResult<>();
         if (e instanceof AbstractException && ((AbstractException) e).getMsg() != null) {
             AbstractException exception = (AbstractException) e;
-            apiResult.setStatus(exception.getMsg().getCode());
+            apiResult.setStatus(exception.getMsg().getCode().intValue());
             apiResult.setMessage(e.getMessage());
         } else {
-            apiResult.setStatus(IResultMsg.APIEnum.FAILED.getCode());
+            apiResult.setStatus(IResultMsg.APIEnum.FAILED.getCode().intValue());
             apiResult.setMessage(e.getMessage());
         }
         apiResult.setErrorInfo(ExceptionUtils.getExceMainInfo(e));

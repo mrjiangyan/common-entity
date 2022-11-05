@@ -26,7 +26,7 @@ apply plugin: 'java'
 apply plugin: 'java-library'
 
 group = 'com.touchbiz'
-version = '2022.10.13.2'
+version = '2022.10.27.1'
 def artifactId = 'common-entity'
 sourceCompatibility = '11'
 
