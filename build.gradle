@@ -5,7 +5,7 @@ buildscript {
         swaggerVersion = '1.5.20'
         springfoxVersion = '3.0.0'
         validationVersion = '2.0.1.Final'
-
+        reactorVersion = '3.4.18'
         mavenUserName = '61402da4c364e0737d2e4d14'
         mavenPassword = 'Gl9SYH4Xz]OB'
         lombokVersion = '+'
@@ -26,9 +26,9 @@ apply plugin: 'java'
 apply plugin: 'java-library'
 
 group = 'com.touchbiz'
-version = '2022.10.27.1'
+version = '2023.2.16.1'
 def artifactId = 'common-entity'
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 configurations {
     compileOnly {
@@ -53,10 +53,11 @@ repositories {
 
 dependencies {
     api group: "javax.persistence", name: "persistence-api", version: "1.0"
+    compileOnly group: "io.projectreactor", name: "reactor-core", version: "${reactorVersion}"
     compileOnly group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
     annotationProcessor group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
     api group: "io.swagger", name: "swagger-annotations", version: "${swaggerVersion}"
-    api group: "io.springfox", name: "springfox-core", version: "${springfoxVersion}"
+//    api group: "io.springfox", name: "springfox-core", version: "${springfoxVersion}"
     api group: "javax.validation", name: "validation-api", version: "${validationVersion}"
     testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
 

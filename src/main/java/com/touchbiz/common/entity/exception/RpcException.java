@@ -1,6 +1,5 @@
 package com.touchbiz.common.entity.exception;
 
-import com.touchbiz.common.entity.result.IResultMsg;
 import io.swagger.annotations.ApiModel;
 
 /**
@@ -10,33 +9,24 @@ import io.swagger.annotations.ApiModel;
  * date: 2018/11/6 17:29
  */
 @ApiModel("RPC接口调用异常错误模型")
-public class RpcException extends AbstractException {
+public class RpcException extends RuntimeException {
     private static final long serialVersionUID = -7469987183079292910L;
 
-    public RpcException(String error) {
-        super(new IResultMsg(){
-
-            @Override
-            public Long getCode() {
-                return APIEnum.FORWORDING_ERROR.getCode();
-            }
-
-            @Override
-            public String getMessage() {
-                return error;
-            }
-        });
+    public RpcException(String message){
+        super(message);
     }
 
-    public RpcException(IResultMsg error) {
-        super(error);
+    public RpcException(String message, Object ... params){
+        super(String.format(message, params));
     }
 
-    public RpcException(IResultMsg error, Throwable cause) {
-        super(error, cause);
+    public RpcException(Throwable cause)
+    {
+        super(cause);
     }
 
-    public RpcException(Throwable cause){
-        super(IResultMsg.APIEnum.FORWORDING_ERROR,cause);
+    public RpcException(String message,Throwable cause)
+    {
+        super(message,cause);
     }
 }

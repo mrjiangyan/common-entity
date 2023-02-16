@@ -15,7 +15,6 @@ public @interface SensitiveField {
 
     /**
      * 不同类型处理不同
-     * @return
      */
     SensitiveEnum type() default SensitiveEnum.ENCODE;
 }

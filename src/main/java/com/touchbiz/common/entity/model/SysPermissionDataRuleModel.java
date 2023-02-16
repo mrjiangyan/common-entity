@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author jiangyan
+ */
 @Data
 public class SysPermissionDataRuleModel {
 

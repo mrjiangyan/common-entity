@@ -4,8 +4,6 @@ package com.touchbiz.common.entity.query;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
