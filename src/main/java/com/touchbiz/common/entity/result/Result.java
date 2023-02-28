@@ -8,9 +8,6 @@ import java.io.Serializable;
 
 /**
  *   接口返回数据格式
- * @author scott
- * @email jeecgos@163.com
- * @date  2019年1月19日
  */
 @Data
 @ApiModel(value="接口返回对象", description="接口返回对象")

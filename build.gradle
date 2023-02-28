@@ -25,8 +25,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'java-library'
 
-group = 'com.touchbiz'
-version = '2023.2.16.1'
+group = 'tech.touchbiz'
+version = '2023.2.28.1'
 def artifactId = 'common-entity'
 sourceCompatibility = '17'
 
@@ -38,8 +38,6 @@ configurations {
 
 repositories {
     maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
-    maven { url 'https://repo.spring.io/snapshot' }
-    maven { url 'https://repo.spring.io/milestone' }
     mavenCentral()
     maven {
         credentials {
