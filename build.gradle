@@ -6,12 +6,8 @@ buildscript {
         springfoxVersion = '3.0.0'
         validationVersion = '2.0.1.Final'
         reactorVersion = '3.4.18'
-        mavenUserName = '61402da4c364e0737d2e4d14'
-        mavenPassword = 'Gl9SYH4Xz]OB'
         lombokVersion = '+'
         junitVersion = '4.13'
-        repositoryUrl = 'https://packages.aliyun.com/maven/repository/2137731-release-WXgfEj'
-
     }
     repositories {
         mavenCentral()
@@ -24,9 +20,10 @@ buildscript {
 apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'java-library'
+apply plugin: 'signing'
 
 group = 'tech.touchbiz'
-version = '2023.2.28.1'
+version = '2023.2.28.2'
 def artifactId = 'common-entity'
 sourceCompatibility = '17'
 
@@ -39,14 +36,6 @@ configurations {
 repositories {
     maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
     mavenCentral()
-    maven {
-        credentials {
-            username "$mavenUserName"
-            password "$mavenPassword"
-        }
-        url 'https://packages.aliyun.com/maven/repository/2137731-release-WXgfEj'
-    }
-
 }
 
 dependencies {
@@ -55,11 +44,11 @@ dependencies {
     compileOnly group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
     annotationProcessor group: "org.projectlombok", name: "lombok", version: "${lombokVersion}"
     api group: "io.swagger", name: "swagger-annotations", version: "${swaggerVersion}"
-//    api group: "io.springfox", name: "springfox-core", version: "${springfoxVersion}"
     api group: "javax.validation", name: "validation-api", version: "${validationVersion}"
     testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
 
 }
+
 
 //打包源代码
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -67,8 +56,31 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+javadoc {
+    description = "Generates project-level javadoc for use in -javadoc jar"
+
+    options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PROTECTED
+    options.author = true
+    options.version = true
+    options.header = project.name
+    options.addStringOption('Xdoclint:none', '-quiet')
+
+    // suppress warnings due to cross-module @see and @link references;
+    // note that global 'api' task does display all warnings.
+    logging.captureStandardError LogLevel.INFO
+    logging.captureStandardOutput LogLevel.INFO // suppress "## warnings" message
+    options.encoding = "UTF-8"  //编码一定要配置否则直接出错
+    options.charSet = 'UTF-8'
+}
+
+
 artifacts {
-    archives sourcesJar
+    archives sourcesJar, javadocJar
 }
 
 publishing {
@@ -78,20 +90,62 @@ publishing {
             artifactId = "$artifactId"
             version = "$project.version"
             from components.java
-        }
+            artifact sourcesJar
+            artifact javadocJar
+
+            // 添加 pom 相关信息
+            // https://docs.gradle.org/current/dsl/org.gradle.api.publish.maven.MavenPublication.html
+            pom {
+                name = "common-entity"
+                description = "公共实体对象定义包"
+                url = "https://github.com/mrjiangyan/common-entity"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    // 添加开发者描述，这个id不知道是什么
+                    developer {
+                        id = "mrjiangyan"
+                        name = "steven jiang"
+                        email = "mrjiangyan@hotmail.com"
+                    }
+                }
+                // 添加你的 git 仓库 信息
+                scm {
+                    connection = "scm:git:https://github.com/mrjiangyan/common-entity.git"
+                    developerConnection = "scm:git:https://github.com/mrjiangyan/common-entity.git"
+                    url = "https://github.com/mrjiangyan/common-entity"
+                }
+            }
+          }
     }
     repositories {
         maven {
-            //认证用户和密码
-            credentials{
-                username = "$mavenUserName"
-                password = "$mavenPassword"
+            name 'sonatype'
+            url 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            credentials {
+                username = "${NEXUS_USERNAME}"
+                password = "${NEXUS_PASSWORD}"
             }
-            //指定要上传的maven私服仓库
-            url "$repositoryUrl"
+        }
+        maven {
+            name = 'sonatypeSnapshot'
+            url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+            credentials {
+                username = "${NEXUS_USERNAME}"
+                password = "${NEXUS_PASSWORD}"
+            }
         }
     }
 }
 
 
+// 签名配置，注意这里的顺序，今天第一次知道 gradle 中的 task 等配置也是有顺序的
+// 必须在 publishing 配置之后
+signing {
+    sign publishing.publications.maven
+}
 
